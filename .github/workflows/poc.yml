@@ -18,6 +18,6 @@ jobs:
         with:
           python-version: '3.x'
       - name: Setup Golang
-        uses: actions/setup-go@v2
+        uses: paulcacheux/setup-go@e11891ad83ce22cfb71be2e6f20b91cc0f3740cc
         with:
           go-version: ${{ env.GOVERSION }}
