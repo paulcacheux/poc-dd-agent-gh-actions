@@ -7,7 +7,7 @@ jobs:
       GOPATH: ${{ github.workspace }}
       GOVERSION: 1.15.13
       MSYS_ROOT: C:\msys64
-      DD_AGENT_BUILD_FOLDER: src/github.com/DataDog/datadog-agent
+      DD_AGENT_BUILD_FOLDER: src\github.com\DataDog\datadog-agent
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -37,14 +37,14 @@ jobs:
       - name: Install tools and dependencies
         working-directory: ${{ env.DD_AGENT_BUILD_FOLDER }}
         run: |
-          pip install -r requirements.txt
+          pip -q install -r requirements.txt
           inv -e install-tools
           inv -e deps
 
       - name: Build and Test
         working-directory: ${{ env.DD_AGENT_BUILD_FOLDER }}
         run: |
-          inv -e rtloader.make --install-prefix=$env:DD_AGENT_BUILD_FOLDER\dev --cmake-options="-G \"MSYS Makefiles\""
+          inv -e rtloader.make --install-prefix=$env:GITHUB_WORKSPACE\$env:DD_AGENT_BUILD_FOLDER\dev --cmake-options='-G \"MSYS Makefiles\"'
           inv -e rtloader.install
           inv -e rtloader.format --raise-if-changed
           inv -e rtloader.test
