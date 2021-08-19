@@ -23,6 +23,24 @@ jobs:
         uses: paulcacheux/setup-go@bba6fe1d5876b1bc23cf834e6c825047156461ec
         with:
           go-version: ${{ env.GOVERSION }}
+
+      - name: Setup pip cache
+        uses: actions/cache@v2
+        with:
+          path: ~\AppData\Local\pip\Cache
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+      - name: Setup Go cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ${{ env.GOPATH }}\bin
+            ${{ env.GOPATH }}\pkg\mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+
       - name: Setup ddagentuser
         run: |
           $Password = ConvertTo-SecureString "dummyPW_:-gch6Rejae9" -AsPlainText -Force
