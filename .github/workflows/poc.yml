@@ -59,11 +59,11 @@ jobs:
           inv -e install-tools
           inv -e deps
 
-      - name: Build and Test
-        working-directory: ${{ env.DD_AGENT_BUILD_FOLDER }}
-        run: |
-          inv -e rtloader.make --install-prefix=$env:GITHUB_WORKSPACE\$env:DD_AGENT_BUILD_FOLDER\dev --cmake-options='-G \"MSYS Makefiles\"'
-          inv -e rtloader.install
-          inv -e rtloader.format --raise-if-changed
-          inv -e rtloader.test
-          inv -e test --python-runtimes 3 --coverage --profile --fail-on-fmt
+          #- name: Build and Test
+          #working-directory: ${{ env.DD_AGENT_BUILD_FOLDER }}
+          #run: |
+          #inv -e rtloader.make --install-prefix=$env:GITHUB_WORKSPACE\$env:DD_AGENT_BUILD_FOLDER\dev --cmake-options='-G \"MSYS Makefiles\"'
+          #inv -e rtloader.install
+          #inv -e rtloader.format --raise-if-changed
+          #inv -e rtloader.test
+          #inv -e test --python-runtimes 3 --coverage --profile --fail-on-fmt
