@@ -35,14 +35,14 @@ jobs:
 
       - name: Install tools and dependencies
         run: |
-          - pip install -r requirements.txt
-          - inv -e install-tools
-          - inv -e deps
+          pip install -r requirements.txt
+          inv -e install-tools
+          inv -e deps
 
       - name: Build and Test
         run: |
-          - inv -e rtloader.make --install-prefix=$env:DD_AGENT_BUILD_FOLDER\dev --cmake-options="-G \"MSYS Makefiles\""
-          - inv -e rtloader.install
-          - inv -e rtloader.format --raise-if-changed
-          - inv -e rtloader.test
-          - inv -e test --python-runtimes 3 --coverage --profile --fail-on-fmt
+          inv -e rtloader.make --install-prefix=$env:DD_AGENT_BUILD_FOLDER\dev --cmake-options="-G \"MSYS Makefiles\""
+          inv -e rtloader.install
+          inv -e rtloader.format --raise-if-changed
+          inv -e rtloader.test
+          inv -e test --python-runtimes 3 --coverage --profile --fail-on-fmt
