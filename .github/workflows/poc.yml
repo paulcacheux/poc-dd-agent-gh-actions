@@ -12,6 +12,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
+          fetch-depth: 0
           repository: DataDog/datadog-agent
           path: ${{ env.DD_AGENT_BUILD_FOLDER }}
       - name: Setup Python 3
