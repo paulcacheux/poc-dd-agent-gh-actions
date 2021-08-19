@@ -1,0 +1,23 @@
+name: Windows Test
+on: push
+jobs:
+  test:
+    runs-on: windows-2016
+    env:
+      GOPATH: ${{ github.workspace }}
+      GOVERSION: 1.15.13
+      MSYS_ROOT: C:\msys64
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          repository: DataDog/datadog-agent
+          path: src/github.com/DataDog/datadog-agent
+      - name: Setup Python 3
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+      - name: Setup Golang
+        uses: actions/setup-go@v2
+        with:
+          go-version: ${{ env.GOVERSION }}
