@@ -18,7 +18,7 @@ jobs:
       - name: Setup Python 3
         uses: actions/setup-python@v2
         with:
-          python-version: '3.8.11'
+          python-version: '3.8.x'
       - name: Setup Golang
         uses: paulcacheux/setup-go@bba6fe1d5876b1bc23cf834e6c825047156461ec
         with:
