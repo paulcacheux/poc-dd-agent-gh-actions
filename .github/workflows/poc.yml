@@ -37,10 +37,10 @@ jobs:
         run: |
           - pip install -r requirements.txt
           - inv -e install-tools
-
-      - name: Test
-        run: |
           - inv -e deps
+
+      - name: Build and Test
+        run: |
           - inv -e rtloader.make --install-prefix=$env:DD_AGENT_BUILD_FOLDER\dev --cmake-options="-G \"MSYS Makefiles\""
           - inv -e rtloader.install
           - inv -e rtloader.format --raise-if-changed
