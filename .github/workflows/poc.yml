@@ -67,6 +67,9 @@ jobs:
           inv -e rtloader.make --install-prefix="$installprefix" --cmake-options='-G \"MSYS Makefiles\"'
           inv -e rtloader.install
           inv -e rtloader.format --raise-if-changed
+      - name: Debug PATH
+        run: |
+          echo $env:PATH
       - uses: actions/upload-artifact@v2
         with:
           name: rtloader
