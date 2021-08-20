@@ -47,7 +47,8 @@ jobs:
           New-LocalUser -Name "ddagentuser" -Description "Test user for the secrets feature on windows." -Password $Password
       - name: Setup PATH
         run: |
-          echo "$env:GITHUB_WORKSPACE\$env:DD_AGENT_BUILD_FOLDER\dev\lib" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+          $installprefix = Join-Path $env:GITHUB_WORKSPACE $env:DD_AGENT_BUILD_FOLDER dev lib
+          echo "$installprefix" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
           echo "$env:GOPATH\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
           echo "$env:MSYS_ROOT\mingw64\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
           echo "$env:MSYS_ROOT\usr\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
@@ -62,7 +63,8 @@ jobs:
       - name: Build and Test
         working-directory: ${{ env.DD_AGENT_BUILD_FOLDER }}
         run: |
-          inv -e rtloader.make --install-prefix="$env:GITHUB_WORKSPACE\$env:DD_AGENT_BUILD_FOLDER\dev" --cmake-options='-G \"MSYS Makefiles\"'
+          $installprefix = Join-Path $env:GITHUB_WORKSPACE $env:DD_AGENT_BUILD_FOLDER dev
+          inv -e rtloader.make --install-prefix="$installprefix" --cmake-options='-G \"MSYS Makefiles\"'
           inv -e rtloader.install
           inv -e rtloader.format --raise-if-changed
       - uses: actions/upload-artifact@v2
