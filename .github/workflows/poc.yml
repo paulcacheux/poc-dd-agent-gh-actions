@@ -67,15 +67,9 @@ jobs:
           inv -e rtloader.make --install-prefix="$installprefix" --cmake-options='-G \"MSYS Makefiles\"'
           inv -e rtloader.install
           inv -e rtloader.format --raise-if-changed
-      - name: Debug PATH
-        run: |
-          echo $env:PATH
-      - uses: actions/upload-artifact@v2
-        with:
-          name: rtloader
-          path: ${{ env.DD_AGENT_BUILD_FOLDER }}\rtloader
-      - name: Build and Test - Part 2
-        working-directory: ${{ env.DD_AGENT_BUILD_FOLDER }}
-        run: |
           inv -e rtloader.test
           inv -e test --python-runtimes 3 --coverage --profile --fail-on-fmt
+
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+        if: ${{ always() }}
