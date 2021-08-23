@@ -67,7 +67,7 @@ jobs:
           Python3_ROOT_DIR: ${{ env.pythonLocation }}
         run: |
           $installprefix = Join-Path $env:GITHUB_WORKSPACE $env:DD_AGENT_BUILD_FOLDER dev
-          inv -e rtloader.make --install-prefix="$installprefix" --cmake-options='-G \"NMAKE Makefiles\"'
+          inv -e rtloader.make --install-prefix="$installprefix" --cmake-options='-G \"NMake Makefiles\"'
           inv -e rtloader.install
           inv -e rtloader.format --raise-if-changed
           inv -e rtloader.test
