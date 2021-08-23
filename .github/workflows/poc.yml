@@ -23,6 +23,8 @@ jobs:
         uses: paulcacheux/setup-go@bba6fe1d5876b1bc23cf834e6c825047156461ec
         with:
           go-version: ${{ env.GOVERSION }}
+      - name: Setup MSVC
+        uses: ilammy/msvc-dev-cmd@v1
 
       - name: Setup pip cache
         uses: actions/cache@v2
