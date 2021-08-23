@@ -61,7 +61,7 @@ jobs:
           inv -e deps
 
       - name: Build and Test
-        timeout-minutes: 5
+        timeout-minutes: 3
         continue-on-error: true
         working-directory: ${{ env.DD_AGENT_BUILD_FOLDER }}
         run: |
