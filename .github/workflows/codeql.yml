@@ -12,6 +12,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
         with:
+          fetch-depth: 0
           repository: DataDog/datadog-agent
 
       - name: Setup Python3
