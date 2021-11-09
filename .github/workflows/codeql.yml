@@ -43,8 +43,8 @@ jobs:
 
       - name: Install project dependencies
         run: |
-          invoke install-tools
-          invoke deps
+          invoke -e install-tools
+          invoke -e deps
 
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v1
@@ -54,7 +54,7 @@ jobs:
 
       - name: Build project
         run: |
-          invoke agent.build --build-exclude=systemd
+          invoke -e agent.build --build-exclude=systemd
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v1
