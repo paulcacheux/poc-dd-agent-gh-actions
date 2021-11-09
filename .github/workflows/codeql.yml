@@ -41,10 +41,13 @@ jobs:
           languages: go, javascript, python, cpp
           setup-python-dependencies: false
 
-      - name: Build project
+      - name: Install project dependencies
         run: |
           invoke install-tools
           invoke deps
+
+      - name: Build project
+        run: |
           invoke agent.build --build-exclude=systemd
 
       - name: Perform CodeQL Analysis
