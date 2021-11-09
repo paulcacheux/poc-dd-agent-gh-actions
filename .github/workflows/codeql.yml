@@ -28,20 +28,28 @@ jobs:
       - name: Setup env variables
         run: |
           echo "CODEQL_PYTHON=$(which python3)" >> $GITHUB_ENV
-          # echo "$GOPATH/bin" >> $GITHUB_PATH
           echo "CGO_LDFLAGS= -L${GITHUB_WORKSPACE}/rtloader/build/rtloader -ldl " >> $GITHUB_ENV
           echo "CGO_CFLAGS= -I${GITHUB_WORKSPACE}/rtloader/include  -I${GITHUB_WORKSPACE}/rtloader/common " >> $GITHUB_ENV
+
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cache/go-build
+            ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+
+      - name: Install project dependencies
+        run: |
+          invoke install-tools
+          invoke deps
 
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v1
         with:
           languages: go, javascript, python, cpp
           setup-python-dependencies: false
-
-      - name: Install project dependencies
-        run: |
-          invoke install-tools
-          invoke deps
 
       - name: Build project
         run: |
