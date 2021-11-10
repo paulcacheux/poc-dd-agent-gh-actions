@@ -1,3 +1,3 @@
 # PoC about Github Actions
 
-relaunch
+retrigger
