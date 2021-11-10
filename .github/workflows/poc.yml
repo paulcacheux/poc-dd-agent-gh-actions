@@ -3,26 +3,23 @@ on: push
 jobs:
   test:
     runs-on: windows-2016
-    env:
-      GOPATH: ${{ github.workspace }}
-      GOVERSION: 1.15.13
-      MSYS_ROOT: C:\msys64
-      DD_AGENT_BUILD_FOLDER: src\github.com\DataDog\datadog-agent
     steps:
       - name: Checkout
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
           repository: DataDog/datadog-agent
-          path: ${{ env.DD_AGENT_BUILD_FOLDER }}
+
       - name: Setup Python 3
         uses: actions/setup-python@v2
         with:
           python-version: '3.8.x'
+
       - name: Setup Golang
         uses: paulcacheux/setup-go@bba6fe1d5876b1bc23cf834e6c825047156461ec
         with:
-          go-version: ${{ env.GOVERSION }}
+          go-version: 1.16.10
+
       - name: Setup MSVC
         uses: ilammy/msvc-dev-cmd@v1
 
@@ -33,12 +30,13 @@ jobs:
           key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
           restore-keys: |
             ${{ runner.os }}-pip-
+
       - name: Setup Go cache
         uses: actions/cache@v2
         with:
           path: |
-            ${{ env.GOPATH }}\bin
-            ${{ env.GOPATH }}\pkg\mod
+            %LocalAppData%\go-build
+            ~/go/pkg/mod
           key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
           restore-keys: |
             ${{ runner.os }}-go-
@@ -47,10 +45,10 @@ jobs:
         run: |
           $Password = ConvertTo-SecureString "dummyPW_:-gch6Rejae9" -AsPlainText -Force
           New-LocalUser -Name "ddagentuser" -Description "Test user for the secrets feature on windows." -Password $Password
+
       - name: Setup PATH
         run: |
           $installprefix = Join-Path $env:GITHUB_WORKSPACE $env:DD_AGENT_BUILD_FOLDER dev lib
-          echo "$env:GOPATH\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
           echo "$installprefix" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
 
       - name: Debug PATH
@@ -68,8 +66,8 @@ jobs:
         env:
           Python3_ROOT_DIR: ${{ env.pythonLocation }}
         run: |
-          $installprefix = Join-Path $env:GITHUB_WORKSPACE $env:DD_AGENT_BUILD_FOLDER dev
-          inv -e rtloader.make --install-prefix="$installprefix" --cmake-options='-G \"NMake Makefiles\"'
+          $installprefix = Join-Path $env:GITHUB_WORKSPACE dev
+          inv -e rtloader.make --install-prefix="$installprefix" --cmake-generator="NMake Makefiles"
           inv -e rtloader.install
           inv -e rtloader.format --raise-if-changed
           inv -e rtloader.test
