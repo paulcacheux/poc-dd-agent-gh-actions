@@ -42,20 +42,22 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-go-
 
+      - run: go env
+
       - name: Install project dependencies
         run: |
           invoke -e install-tools
           invoke -e deps
 
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v1
-        with:
-          languages: go, javascript, python, cpp
-          setup-python-dependencies: false
+          #- name: Initialize CodeQL
+          #uses: github/codeql-action/init@v1
+          #with:
+          #languages: go, javascript, python, cpp
+          #setup-python-dependencies: false
 
       - name: Build project
         run: |
           invoke -e agent.build --build-exclude=systemd
 
-      - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v1
+          #- name: Perform CodeQL Analysis
+          #uses: github/codeql-action/analyze@v1
