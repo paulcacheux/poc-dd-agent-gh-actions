@@ -30,6 +30,7 @@ jobs:
       - name: Setup env variables
         run: |
           echo "CODEQL_PYTHON=$(which python3)" >> $GITHUB_ENV
+          echo "CODEQL_EXTRACTOR_GO_BUILD_TRACING=on" >> $GITHUB_ENV
           echo "CGO_LDFLAGS= -L${GITHUB_WORKSPACE}/rtloader/build/rtloader -ldl " >> $GITHUB_ENV
           echo "CGO_CFLAGS= -I${GITHUB_WORKSPACE}/rtloader/include  -I${GITHUB_WORKSPACE}/rtloader/common " >> $GITHUB_ENV
 
