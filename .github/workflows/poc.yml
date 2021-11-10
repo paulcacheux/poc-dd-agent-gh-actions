@@ -46,11 +46,6 @@ jobs:
           $Password = ConvertTo-SecureString "dummyPW_:-gch6Rejae9" -AsPlainText -Force
           New-LocalUser -Name "ddagentuser" -Description "Test user for the secrets feature on windows." -Password $Password
 
-      - name: Setup PATH
-        run: |
-          $installprefix = Join-Path $env:GITHUB_WORKSPACE $env:DD_AGENT_BUILD_FOLDER dev lib
-          echo "$installprefix" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
-
       - name: Debug PATH
         run: echo $env:PATH
 
