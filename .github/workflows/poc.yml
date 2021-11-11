@@ -17,12 +17,16 @@ jobs:
           python-version: '3.8.x'
 
       - name: Setup Golang
-        uses: paulcacheux/setup-go@bba6fe1d5876b1bc23cf834e6c825047156461ec
+        uses: paulcacheux/setup-go@v2.1.4
         with:
           go-version: 1.16.10
 
-      - name: Setup MSVC
-        uses: ilammy/msvc-dev-cmd@v1
+      - uses: msys2/setup-msys2@v2
+        with:
+          install: >-
+            mingw-w64-x86_64-gcc
+            mingw-w64-x86_64-cmake
+          update: true
 
       - name: Setup pip cache
         uses: actions/cache@v2
