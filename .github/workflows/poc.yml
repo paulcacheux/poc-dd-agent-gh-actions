@@ -55,6 +55,7 @@ jobs:
         run: echo $env:PATH
 
       - name: Install tools and dependencies
+        shell: msys2 {0}
         run: |
           pip -q install -r requirements.txt
           inv -e install-tools
