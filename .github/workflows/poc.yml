@@ -55,14 +55,12 @@ jobs:
         run: echo $env:PATH
 
       - name: Install tools and dependencies
-        shell: msys2 {0}
         run: |
           pip -q install -r requirements.txt
           inv -e install-tools
           inv -e deps
 
       - name: Build and Test
-        shell: msys2 {0}
         env:
           Python3_ROOT_DIR: ${{ env.pythonLocation }}
         run: |
