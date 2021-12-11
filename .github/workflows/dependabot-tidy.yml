@@ -1,10 +1,10 @@
-name: "Code Scanning - Action"
+name: Dependabot tidy-all
 
 on:
   push
 
 jobs:
-  Dependabot-Tidy:
+  tidy:
     runs-on: ubuntu-latest
 
     steps:
