@@ -1,0 +1,38 @@
+name: "Code Scanning - Action"
+
+on:
+  push
+
+jobs:
+  Dependabot-Tidy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          repository: DataDog/datadog-agent
+
+      - name: Setup Python3
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Setup Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.16.10
+
+      - name: Install python dependencies
+        run: |
+          pip3 install -r requirements.txt
+
+      - name: Install go deps
+        run: |
+          invoke -e install-tools
+          invoke -e deps
+
+      - name: Tidy all go dependencies
+        run: |
+          invoke -e tidy-all
